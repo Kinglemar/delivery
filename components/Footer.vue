@@ -113,7 +113,7 @@
             <h2 class="footer-menu-title font-semibold">Contact</h2>
             <ul role="list" class="footer-menu-list w-list-unstyled">
               <li class="list-item">(209) 555-0104</li>
-              <li class="list-item">Hello@mail.com</li>
+              <!-- <li class="list-item">Hello@mail.com</li> -->
             </ul>
           </div>
         </div>
