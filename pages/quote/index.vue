@@ -324,6 +324,9 @@ watch(qouteObj, async (newVal, oldVal) => {
 });
 
 const requestQuote = async () => {
+  const quote = {...qouteObj, fromCountry: `${fromCountry.value}`, toCountry: `${toCountry.value}`}
+  const storedQuote = JSON.stringify(quote)
+
   const formatted = `
   <div>
     <strong><pre>Means: ${qouteObj?.means}</pre></strong>
@@ -351,6 +354,7 @@ const requestQuote = async () => {
       },
     })
       .then(() => {
+        localStorage.setItem('QUOTE', storedQuote)
         toastHandler(
           "success","Quote requested. We will send a quote to the provided email."
         );
@@ -368,7 +372,7 @@ const checked = (index) => {
     itemList[z].selected = false;
   }
   itemList[index].selected = true;
-  qouteObj.value.means = itemList[index].name;
+  qouteObj.means = itemList[index].name;
 };
 </script>
 

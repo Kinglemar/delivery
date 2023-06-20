@@ -9,48 +9,81 @@
       class="md:my-36 my-20 sm:mx-auto mx-auto w-11/12 shadow-lg p-3 rounded-lg"
     >
       <div class="lg:flex items-center">
-       
         <div class="lg:w-5/12 w-full p-4 order-2">
           <p class="text-lg font-bold mb-8">Parcel Details</p>
           <div class="grid grid-cols-3 md:gap-10 gap-y-8 gap-x-2 grid-rows-2">
-            <div class="text-center relative border border-[#ddddec] p-3 rounded-lg">
-              <p class="text-center">Land</p>
-              <span class="text-emerald-400 bg-white px-2 py-1 rounded-lg absolute top-[-20px] md:right-[-20px] right-0">Route</span>
+            <div
+              class="text-center relative border border-[#ddddec] p-3 rounded-lg"
+            >
+              <p class="text-center">{{ QUOTE?.means || 'Land'}}</p>
+              <span
+                class="text-emerald-400 bg-white px-2 py-1 rounded-lg absolute top-[-20px] md:right-[-20px] right-0"
+                >Route</span
+              >
             </div>
-            <div class="text-center relative border border-[#ddddec] p-3 rounded-lg">
-              <p class="text-center">20kg</p>
-              <span class="text-emerald-400 bg-white px-2 py-1 rounded-lg absolute top-[-20px] md:right-[-20px] right-0">Weight</span>
+            <div
+              class="text-center relative border border-[#ddddec] p-3 rounded-lg"
+            >
+              <p class="text-center">{{ QUOTE?.wei || 0 }}</p>
+              <span
+                class="text-emerald-400 bg-white px-2 py-1 rounded-lg absolute top-[-20px] md:right-[-20px] right-0"
+                >Weight</span
+              >
             </div>
-            <div class="text-center relative border border-[#ddddec] p-3 rounded-lg">
-              <p class="text-center">20cm</p>
-              <span class="text-emerald-400 bg-white px-2 py-1 rounded-lg absolute top-[-20px] md:right-[-20px] right-0">Height</span>
+            <div
+              class="text-center relative border border-[#ddddec] p-3 rounded-lg"
+            >
+              <p class="text-center">{{ QUOTE?.hei || 0 }}</p>
+              <span
+                class="text-emerald-400 bg-white px-2 py-1 rounded-lg absolute top-[-20px] md:right-[-20px] right-0"
+                >Height</span
+              >
             </div>
-            <div class="text-center relative border border-[#ddddec] p-3 rounded-lg">
-              <p class="text-center">20cm</p>
-              <span class="text-emerald-400 bg-white px-2 py-1 rounded-lg absolute top-[-20px] md:right-[-20px] right-0">Width</span>
+            <div
+              class="text-center relative border border-[#ddddec] p-3 rounded-lg"
+            >
+              <p class="text-center">{{ QUOTE?.width || 0 }}</p>
+              <span
+                class="text-emerald-400 bg-white px-2 py-1 rounded-lg absolute top-[-20px] md:right-[-20px] right-0"
+                >Width</span
+              >
             </div>
-            <div class="text-center relative border border-[#ddddec] p-3 rounded-lg">
-              <p class="text-center">20cm</p>
-              <span class="text-emerald-400 bg-white px-2 py-1 rounded-lg absolute top-[-20px] md:right-[-20px] right-0">Length</span>
+            <div
+              class="text-center relative border border-[#ddddec] p-3 rounded-lg"
+            >
+              <p class="text-center">{{ QUOTE?.len || 0 }}</p>
+              <span
+                class="text-emerald-400 bg-white px-2 py-1 rounded-lg absolute top-[-20px] md:right-[-20px] right-0"
+                >Length</span
+              >
             </div>
           </div>
 
           <div class="my-3">
             <div class="relative border border-[#ddddec] p-3 rounded-lg my-3">
-              <p class="">Television</p>
-              <span class="text-emerald-400 bg-white px-2 py-1 rounded-lg absolute top-[-20px] md:right-[-20px] right-0">Type</span>
+              <p class="">{{ QUOTE ? QUOTE?.type : 'Parcel' }}</p>
+              <span
+                class="text-emerald-400 bg-white px-2 py-1 rounded-lg absolute top-[-20px] md:right-[-20px] right-0"
+                >Type</span
+              >
             </div>
             <div class="relative border border-[#ddddec] p-3 rounded-lg my-3">
-              <p class="">Abuja</p>
-              <span class="text-emerald-400 bg-white px-2 py-1 rounded-lg absolute top-[-20px] md:right-[-20px] right-0">From</span>
+              <p class="">{{ QUOTE ? QUOTE?.from + `${QUOTE?.fromCountry ? `, ${QUOTE?.fromCountry}` : ''}` : 'Here' }}</p>
+              <span
+                class="text-emerald-400 bg-white px-2 py-1 rounded-lg absolute top-[-20px] md:right-[-20px] right-0"
+                >From</span
+              >
             </div>
             <div class="relative border border-[#ddddec] p-3 rounded-lg my-3">
-              <p class="">Sokoto</p>
-              <span class="text-emerald-400 bg-white px-2 py-1 rounded-lg absolute top-[-20px] md:right-[-20px] right-0">To</span>
+              <p class="">{{ QUOTE ? QUOTE?.to + `${QUOTE?.toCountry ? `, ${QUOTE?.toCountry}` : ''}` : 'There' }}</p>
+              <span
+                class="text-emerald-400 bg-white px-2 py-1 rounded-lg absolute top-[-20px] md:right-[-20px] right-0"
+                >To</span
+              >
             </div>
           </div>
         </div>
-         <div
+        <div
           class="flex flex-col justify-center h-[27rem] lg:w-7/12 w-full border-2 rounded-lg border-dashed border-[#ddddec] py-10 px-5"
         >
           <h1 class="text-3xl text-center">
@@ -95,13 +128,17 @@ const route = useRoute();
 const audioTracking = ref(false);
 const showParcel = ref(false);
 const noParcel = ref(false);
+const QUOTE = ref(null);
 
 onMounted(() => {
   const detail = route.query.id;
   function setValue() {
     audioTracking.value = false;
   }
-
+  if (localStorage.getItem("QUOTE") !== null) {
+    let storedQuote = JSON.parse(localStorage.getItem("QUOTE"));
+    QUOTE.value = storedQuote;
+  }
   audioTracking.value = true;
 
   if (detail.length < 6) {
