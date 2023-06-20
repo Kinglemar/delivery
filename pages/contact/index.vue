@@ -438,7 +438,7 @@
 <script setup>
 import { ref, reactive, onMounted, watch } from "vue";
 import { Countries } from "@/composables/countries";
-import { toastHandler } from "@/composables/toastHandler";
+import { toastHandler } from "@/composables/useToast"
 
 let options = [
   {
@@ -544,7 +544,7 @@ const requestQuote = async () => {
   </div>`;
 
   if (allowQuoteUs.value === false) {
-    toastHandler("Please fill all fields.", 3500);
+    toastHandler("info", "Please fill all fields.", 3500);
   } else {
     requesting.value = true;
     const { data: id } = await useFetch("/api/sendMail", {
@@ -555,13 +555,13 @@ const requestQuote = async () => {
       },
     })
       .then(() => {
-        toastHandler(
+        toastHandler("success",
           "Quote requested. We will send a quote to the provided email."
         );
         requesting.value = false;
       })
       .catch((err) => {
-        toastHandler(err.message, 4500);
+        toastHandler("error", "An error occurred", 4500);
         requesting.value = false;
       });
   }
@@ -587,18 +587,17 @@ const sendMail = async () => {
       },
     })
       .then(() => {
-        toastHandler("Mail sent. We will review and revert.", 3500);
+        toastHandler("success", "Mail sent. We will review and revert.", 3500);
         sendingMail.value = false;
       })
       .catch((err) => {
-        toastHandler(err.message, 3500);
+        toastHandler("error", err.message, 3500);
         sendingMail.value = false;
       });
   }
 };
 
 const checked = (index) => {
-  console.log("Clicked");
   for (let z = 0; z < itemList.length; z++) {
     itemList[z].selected = false;
   }

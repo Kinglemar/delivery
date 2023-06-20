@@ -112,7 +112,7 @@
 
 <script setup>
 import { ref } from "vue";
-import { toastHandler } from "@/composables/toastHandler";
+import { toastHandler } from "~/composables/useToast";
 
 const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 const subscribing = ref(false);
@@ -120,15 +120,18 @@ const email = ref("");
 
 const subscribeToUs = () => {
   const test = emailRegex.test(email.value);
-
+  const Message = () => {
+    subscribing.value = false;
+    toastHandler("success", "Subscribed, we will update you soon.", 4000);
+  };
   if (email.value.length < 4) {
-    toastHandler("Invalid email", 3000);
+    toastHandler("error", "Invalid email", 3000);
   } else if (test === false) {
-    toastHandler("Invalid email", 3000);
+    toastHandler("error", "Invalid email", 3000);
   } else {
     subscribing.value = true;
     setTimeout(() => {
-      subscribing.value = false;
+      Message();
     }, 4000);
   }
 };

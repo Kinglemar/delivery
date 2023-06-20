@@ -1,6 +1,6 @@
 import { Resend } from 'resend';
 import logger from './middleware/logger';
-const resend = new Resend('re_K4ysoVYo_5ezfEstR9jLqEzvWQhrctpsa');
+const resend = new Resend(process.env.EMAIL_KEY);
 export default defineEventHandler(async (event) => {
     const body = await readBody(event)
     logger(body)
