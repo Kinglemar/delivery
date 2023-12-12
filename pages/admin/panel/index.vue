@@ -36,7 +36,7 @@ async function addComment(data: any) {
     commentBody.timeline.push(comment.value);
     commenting.value = true;
     axios
-      .put(`http://localhost:10000/v1/shipments/${data.id}`, commentBody)
+      .put(`https://sj-ifez.onrender.com/v1/shipments/${data.id}`, commentBody)
       .then((res) => {
         console.log(res.data);
         toastHandler("success", "Comment added");
@@ -57,7 +57,7 @@ async function addDelivery(data: any) {
   try {
     requesting.value = true;
     axios
-      .post("http://localhost:10000/v1/shipments", shipments.value)
+      .post("https://sj-ifez.onrender.com/v1/shipments", shipments.value)
       .then((res) => {
         console.log(res.data);
       });
@@ -73,7 +73,7 @@ async function editDelivery(data: any) {
   try {
     requesting.value = true;
     axios
-      .put(`http://localhost:10000/v1/shipments/${data.id}`, data)
+      .put(`https://sj-ifez.onrender.com/v1/shipments/${data.id}`, data)
       .then((res) => {
         toastHandler("success", "Record Saved");
         showAddModal.value = false;
@@ -87,7 +87,7 @@ async function editDelivery(data: any) {
 async function fetchDelivery() {
   if (true) {
     try {
-      axios.get("http://localhost:10000/v1/shipments").then((res) => {
+      axios.get("https://sj-ifez.onrender.com/v1/shipments").then((res) => {
         let format = res.data?.data;
         console.log(format);
         shipmentsArray.value = format;
@@ -143,7 +143,6 @@ const shipmentsArray = ref([]);
 
 <template>
   <main class="w-full min-h-screen bg-white">
-    <pre>{{ token }}</pre>
     <div>
       <div class="flex justify-end mb-3">
         <button

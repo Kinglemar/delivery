@@ -47,7 +47,7 @@ async function loginAdmin() {
     requesting.value = true;
 
     axios
-      .post("http://localhost:10000/v1/auth/access", form.value)
+      .post("https://sj-ifez.onrender.com/v1/auth/access", form.value)
       .then((res) => {
         console.log(res.data);
         updateUser(res.data.user);
