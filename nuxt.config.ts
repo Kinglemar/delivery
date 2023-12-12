@@ -1,30 +1,41 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-    modules: ['@nuxtjs/tailwindcss'],
-    // ssr: false,
-    // nitro: {
-    //     preset: 'node-server'
-    // },
-    app: {
-        head: {
-            script: [{
-                src: '/js/drift.js',
-                async: true,
-                // tagPosition: 'bodyClose'
-            }],
+  modules: [
+    "@pinia/nuxt",
+    "@vueuse/nuxt",
+    "@nuxt/image",
+    "@pinia-plugin-persistedstate/nuxt",
+    "nuxt-security",
+  ],
+  // ssr: false,
+  // nitro: {
+  //     preset: 'node-server'
+  // },
+
+  components: { global: true, dirs: ["~/components"] },
+  app: {
+    head: {
+      script: [
+        {
+          src: "/js/drift.js",
+          async: true,
+          // tagPosition: 'bodyClose'
         },
+      ],
     },
-    css: ['~/assets/css/main.css',
-        "primevue/resources/themes/lara-light-blue/theme.css",
-        "primevue/resources/primevue.css"
-    ],
-    postcss: {
-        plugins: {
-            tailwindcss: {},
-            autoprefixer: {},
-        },
+  },
+  css: [
+    "~/assets/css/main.css",
+    "primevue/resources/themes/mira/theme.css",
+    "primevue/resources/primevue.css",
+  ],
+  postcss: {
+    plugins: {
+      tailwindcss: {},
+      autoprefixer: {},
     },
-    build: {
-        transpile: ["primevue"]
-    },
-})
+  },
+  build: {
+    transpile: ["primevue"],
+  },
+});

@@ -1,15 +1,77 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
-    content: [
-      "./components/**/*.{js,vue,ts}",
-      "./layouts/**/*.vue",
-      "./pages/**/*.vue",
-      "./plugins/**/*.{js,ts}",
-      "./nuxt.config.{js,ts}",
-      "./app.vue",
-    ],
-    theme: {
-      extend: {},
+export default {
+  content: [
+    "./components/**/*.{js,vue,ts}",
+    "./layouts/**/*.vue",
+    "./pages/**/*.vue",
+    "./plugins/**/*.{js,ts}",
+    "./app.vue",
+    "./error.vue",
+  ],
+  darkMode: "class",
+  spacing: {},
+  theme: {
+    content: {
+      ribbon: 'url("/img/ribbon.svg")',
+      ribbon2: 'url("/img/ribbon2.svg")',
+      star: 'url("/img/section-star.svg")',
     },
-    plugins: [],
-  }
+    colors: {
+      white: "#fff",
+      whitesmoke: "#ebebeb",
+      darkslateblue: {
+        100: "#003366",
+        200: "#00274e",
+      },
+      gray: {
+        50: "#F5F5F5",
+        100: "#fbfbfb",
+        200: "#1e1e1e",
+      },
+      "blue-01": "#4776E6",
+      "blue-03": "#8093a6",
+      "blue-04": "#004E8F",
+      purple: "#b190b6",
+      salmon: "#fc6767",
+      blueviolet: "#9747ff",
+      "blueviolet-01": "#8E54E9",
+      mediumspringgreen: "#15cf74",
+      darkgray: "#b1b1b1",
+      lightgray: "#d8d5d5",
+      coral: {
+        100: "#ff7f50",
+        200: "rgba(255, 127, 80, 0.06)",
+      },
+      springgreen: "#32e86f",
+      black: "#000",
+      darkred: "#993300",
+      midnightblue: "#260353",
+      darkgreen: "#07722b",
+      "blue-11": "#000810",
+      "blue-05": "#2b4b6c",
+      "blue-08": "#001a34",
+      "blue-06": "#00274e",
+      greenyellow: "#a8f51f",
+      "blue-10": "#000d1a",
+      "blue-07": "#002141",
+    },
+    fontFamily: {
+      "paragraph-small-semibold": "Inter",
+      "clash-display": "'Clash Display'",
+    },
+    extend: {
+      fontSize: {
+        sm: "14px",
+        xs: "12px",
+        base: "16px",
+        "23xl": "42px",
+        "5xl": "24px",
+        "45xl": "64px",
+        "3xs": "10px",
+        "13xl": "32px",
+        inherit: "inherit",
+      },
+    },
+  },
+  plugins: [],
+};
