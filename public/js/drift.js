@@ -21,5 +21,4 @@
   }
 }();
 drift.SNIPPET_VERSION = '0.3.1';
-drift.load('tsdhfvwgs39x');
-console.log('I have loaded the chat')
+drift.load('dxke3kzdk5ny');
