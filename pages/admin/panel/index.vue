@@ -81,7 +81,7 @@ async function addComment() {
 }
 
 function decider() {
-  if (editMode.value) {
+  if (editMode.value === true) {
     editDelivery(shipments.value);
   }
   addDelivery(shipments.value);
@@ -181,7 +181,6 @@ const shipmentsArray = ref([]);
           Add Shipment
         </button>
       </div>
-      <ConfirmDialog></ConfirmDialog>
       <DataTable
         showGridlines
         paginator
@@ -521,7 +520,7 @@ const shipmentsArray = ref([]);
               </p>
             </template>
             <section class="gap-2" id="timeline">
-              <div class="md:flex items-center gap-5">
+              <div v-if="editMode" class="md:flex items-center gap-5">
                 <div class="mb-2 md:w-5/12">
                   <input
                     v-model="comment.title"
@@ -553,9 +552,11 @@ const shipmentsArray = ref([]);
                 </h1>
               </div>
 
-              <h3 class="mt-8 text-center text-base">Comments</h3>
-              <div class="mt-3 mx-2 mb-10 rounded-lg border border-greenyellow">
+              <div v-if="editMode">
+                <h3 class="mt-8 text-center text-base">Comments</h3>
+              <div  class="mt-3 mx-2 mb-10 rounded-lg border border-greenyellow">
                 <ArtisanOrderProgress :timeline="shipments.timeline" />
+              </div>
               </div>
             </section>
             <div class="flex justify-between">
@@ -581,13 +582,22 @@ const shipmentsArray = ref([]);
             Cancel
           </button>
           <button
+          v-if="!editMode"
             class="w-full mt-2 text-base text-white bg-mediumspringgreen px-5 py- rounded-[8px]"
-            @click="decider"
+            @click="addDelivery"
           >
             <p v-if="requesting">Requesting...</p>
             <p v-else>Save</p>
           </button>
-        </div>
+          <button
+          v-else
+            class="w-full mt-2 text-base text-white bg-mediumspringgreen px-5 py- rounded-[8px]"
+            @click="editDelivery"
+          >
+            <p v-if="requesting">Requesting...</p>
+            <p v-else>Edit</p>
+          </button>
+          </div>
       </template>
     </Dialog>
   </main>

@@ -338,17 +338,16 @@
   </section>
 </template>
 <script setup>
-import { ref } from "vue";
 const router = useRouter();
 const trackingID = ref("");
 const audioTracking = () => {
   let tracker = trackingID.value;
-  router.push({ path: "/track", query: { id: tracker } });
+  console.log(tracker.val)
+  router.push({ path: `track/${trackingID.value}` });
 };
 
 definePageMeta({
   layout: "default",
-  methods: {},
 });
 </script>
 

@@ -7,21 +7,16 @@ import Toast from 'primevue/toast';
 import ToastService from 'primevue/toastservice';
 import ConfirmationService from 'primevue/confirmationservice';
 import ConfirmDialog from 'primevue/confirmdialog';
-
+import ProgressBar from 'primevue/progressbar';
 import FileUpload from 'primevue/fileupload';
-
-
 import TabView from 'primevue/tabview';
 import TabPanel from 'primevue/tabpanel';
-
-
 import Dialog from 'primevue/dialog';
-
-
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import ColumnGroup from 'primevue/columngroup';  
 import Row from 'primevue/row';
+import Skeleton from 'primevue/skeleton';
 
 
 export default defineNuxtPlugin((nuxtApp) => {
@@ -41,5 +36,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     nuxtApp.vueApp.component("TabPanel", TabPanel);
     nuxtApp.vueApp.component("ConfirmDialog", ConfirmDialog);
     nuxtApp.vueApp.component("FileUpload", FileUpload);
+    nuxtApp.vueApp.component("ProgressBar", ProgressBar);
+    nuxtApp.vueApp.component("Skeleton", Skeleton);
     //other components that you need
 });

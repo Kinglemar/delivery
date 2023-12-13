@@ -52,7 +52,7 @@
           >
             <h2 class="footer-menu-title font-semibold">Address</h2>
             <p class="footer-paragraph mb-7 md:mb-10">
-              2972 Westheimer Rd. Santa Ana, Illinois 85486
+              2101 Roger Sedam Dr, Cody, WY
             </p>
             <div id="button" class="topbar-left-menu">
               <img
@@ -61,7 +61,6 @@
                 alt=""
                 class="copyright-menu-icon"
               />
-              <div class="footer-menu-text">Find on Map</div>
             </div>
           </div>
           <div
@@ -112,8 +111,8 @@
           >
             <h2 class="footer-menu-title font-semibold">Contact</h2>
             <ul role="list" class="footer-menu-list w-list-unstyled">
-              <li class="list-item">(209) 555-0104</li>
-              <!-- <li class="list-item">Hello@mail.com</li> -->
+              <li class=" text-base">+1 (307) LOGIIST</li>
+              <li class="text-base">support@logistfreight.com</li>
             </ul>
           </div>
         </div>

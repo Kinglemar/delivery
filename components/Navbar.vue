@@ -1,3 +1,49 @@
+<script setup>
+import { ref } from "vue";
+
+const router = useRouter();
+const visible = ref(false);
+const errMsg = ref(false);
+const tracker = ref("");
+
+const audioTracking = () => {
+  let trace = tracker.value;
+  if (trace.length < 5) {
+    errMsg.value = true;
+    setTimeout(() => {
+      errMsg.value = false;
+    }, 4000);
+  } else {
+    router.push({ path: `track/${tracker.value}` });
+    visible.value = false;
+  }
+};
+
+const gotoAbout = () => {
+  router.push({ path: "/about-us" });
+  visible.value = false;
+};
+const gotoServices = () => {
+  router.push({ path: "/services" });
+  visible.value = false;
+};
+const gotoContactUs = () => {
+  router.push({ path: "/contact" });
+  visible.value = false;
+};
+const gotoCareers = () => {
+  router.push({ path: "/track" });
+  visible.value = false;
+};
+const requestQuote = () => {
+  router.push({ path: "/quote" });
+  visible.value = false;
+};
+const goHome = () => {
+  router.push({ path: "/" });
+  visible.value = false;
+};
+</script>
 <template>
   <section class="navbar-logo-left">
     <div
@@ -44,7 +90,7 @@
                 fill="#0E0F18"
               />
             </svg>
-            </NuxtLink>
+          </NuxtLink>
           <nav
             role="navigation"
             class="w-nav-menu md:block hidden md:8/12 lg:w-[30rem]"
@@ -62,7 +108,7 @@
                 <NuxtLink class="nav-link" to="/contact">Contact us</NuxtLink>
               </li>
               <li>
-                <NuxtLink class="nav-link" to="/">Careers</NuxtLink>
+                <NuxtLink class="nav-link" to="/track">Track</NuxtLink>
               </li>
             </ul>
           </nav>
@@ -189,9 +235,10 @@
             Contact us
           </button>
           <button
+            @click="gotoCareers"
             class="p-4 w-5/12 mx-auto text-center bg-[#f4f7ff] text-black border rounded-lg"
           >
-            Careers
+            Track
           </button>
           <button
             @click="requestQuote"
@@ -204,53 +251,6 @@
     </Sidebar>
   </section>
 </template>
-
-<script setup>
-import { ref } from "vue";
-
-const router = useRouter();
-const visible = ref(false);
-const errMsg = ref(false);
-const tracker = ref("");
-
-const audioTracking = () => {
-  let trace = tracker.value;
-  if (trace.length < 5) {
-    errMsg.value = true;
-    setTimeout(() => {
-      errMsg.value = false;
-    }, 4000);
-  } else {
-    router.push({ path: "/track", query: { id: trace } });
-    visible.value = false;
-  }
-};
-
-const gotoAbout = () => {
-  router.push({ path: "/about-us" });
-  visible.value = false;
-};
-const gotoServices = () => {
-  router.push({ path: "/services" });
-  visible.value = false;
-};
-const gotoContactUs = () => {
-  router.push({ path: "/contact" });
-  visible.value = false;
-};
-const gotoCareers = () => {
-  router.push({ path: "/careers" });
-  visible.value = false;
-};
-const requestQuote = () => {
-  router.push({ path: "/quote" });
-  visible.value = false;
-};
-const goHome = () => {
-  router.push({ path: "/" });
-  visible.value = false;
-};
-</script>
 
 <style scoped>
 .btn-wrapper:hover > div {

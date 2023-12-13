@@ -11,11 +11,6 @@ export default {
   darkMode: "class",
   spacing: {},
   theme: {
-    content: {
-      ribbon: 'url("/img/ribbon.svg")',
-      ribbon2: 'url("/img/ribbon2.svg")',
-      star: 'url("/img/section-star.svg")',
-    },
     colors: {
       white: "#fff",
       whitesmoke: "#ebebeb",

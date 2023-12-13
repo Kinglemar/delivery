@@ -91,3 +91,11 @@ body {
 .p-tabview-panels{
   padding-inline: 0;
 }
+
+.p-progressbar-value{
+  background: #15cf74;
+}
+
+.p-progressbar .p-component .p-progressbar-indeterminate{
+  height: 8px;
+}

@@ -26,11 +26,11 @@
             Unbeatable Trucking and Transport Services
           </h1>
           <p class="text-lg font-bold my-3">
-            Eliite Logistics is world leading logistic service company and
+            Logist is world leading logistic service company and
             Provide First-Class Solution.
           </p>
           <p class="text-base my-3">
-            Eliite Logistics is the world’s leading logistic service company, We
+            Logist is the world’s leading logistic service company, We
             have a wide experience in overland industry specific logistic
             solutions like pharmaceutical logistics, retail and automotive
             logistics by train or road.

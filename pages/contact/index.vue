@@ -1,3 +1,172 @@
+<script setup>
+import { Countries } from "@/composables/countries";
+import { toastHandler } from "@/composables/useToast"
+
+let options = [
+  {
+    name: "Land",
+    selected: true,
+  },
+  {
+    name: "Air",
+    selected: false,
+  },
+  {
+    name: "Sea",
+    selected: false,
+  },
+];
+
+const itemList = reactive(options);
+const fromCountry = ref("");
+const toCountry = ref("");
+const sendingMail = ref(false);
+const requesting = ref(false);
+const validEmail = ref(false);
+const validContactEmail = ref(false);
+const allowContactUs = ref(false);
+const allowQuoteUs = ref(false);
+const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
+const dataObj = reactive({
+  name: "",
+  email: "",
+  message: "",
+});
+
+const qouteObj = reactive({
+  email: "",
+  means: "Land",
+  width: "",
+  wei: "",
+  type: "",
+  hei: "",
+  len: "",
+  from: "",
+  to: "",
+});
+
+//Watchers
+
+watch(
+  () => qouteObj.email,
+  async (newVal, oldVal) => {
+    let answer = emailRegex.test(qouteObj.email);
+    validEmail.value = answer;
+  }
+);
+watch(
+  () => dataObj.email,
+  async (newVal, oldVal) => {
+    let answer = emailRegex.test(dataObj.email);
+    validContactEmail.value = answer;
+  }
+);
+watch(dataObj, async (newVal, oldVal) => {
+  let { message, name } = newVal;
+  if (
+    message.length > 6 &&
+    name.length > 2 &&
+    validContactEmail.value == true
+  ) {
+    allowContactUs.value = true;
+  } else {
+    allowContactUs.value = false;
+  }
+});
+watch(qouteObj, async (newVal, oldVal) => {
+  let { wei, type, from, to } = newVal;
+  if (
+    wei.length != 0 &&
+    type.length != 0 &&
+    from.length != 0 &&
+    to.length != 0 &&
+    validEmail.value == true
+  ) {
+    allowQuoteUs.value = true;
+  } else {
+    allowQuoteUs.value = false;
+  }
+});
+
+const requestQuote = async () => {
+  const formatted = `
+  <div>
+    <strong><pre>Means: ${qouteObj?.means}</pre></strong>
+    <strong><pre>Email: ${qouteObj?.email}</pre></strong>
+    <strong><pre>Type of package: ${qouteObj?.type}</pre></strong>
+    <strong><pre>Weight: ${qouteObj?.wei}</pre></strong>
+    <strong><pre>Width: ${qouteObj?.width}</pre></strong>
+    <strong> <pre>Height: ${qouteObj?.hei}</pre></strong>
+    <strong> <pre>Length: ${qouteObj?.len}</pre></strong>
+    <strong> <pre>From: ${
+      qouteObj?.from + ", " + fromCountry.value
+    }</pre></strong>
+    <strong> <pre>To: ${qouteObj?.to + ", " + toCountry.value}</pre></strong>
+  </div>`;
+
+  if (allowQuoteUs.value === false) {
+    toastHandler("info", "Please fill all fields.", 3500);
+  } else {
+    requesting.value = true;
+    const { data: id } = await useFetch("/api/sendMail", {
+      method: "post",
+      body: {
+        subject: "Requesting quote",
+        message: formatted,
+      },
+    })
+      .then(() => {
+        toastHandler("success",
+          "Quote requested. We will send a quote to the provided email."
+        );
+        requesting.value = false;
+      })
+      .catch((err) => {
+        toastHandler("error", "An error occurred", 4500);
+        requesting.value = false;
+      });
+  }
+};
+
+const sendMail = async () => {
+  const formatted = `
+  <div>
+    <strong><pre>Name: ${dataObj?.name}</pre></strong>
+    <strong><pre>Email: ${dataObj?.email}</pre></strong>
+    <strong><pre>Message: ${dataObj?.message}</pre></strong>
+  </div>`;
+
+  if (allowContactUs.value === false) {
+    toastHandler("Please fill all fields.", 3500);
+  } else {
+    sendingMail.value = true;
+    const { data: id } = await useFetch("/api/sendMail", {
+      method: "post",
+      body: {
+        subject: "Enquiries",
+        message: formatted,
+      },
+    })
+      .then(() => {
+        toastHandler("success", "Mail sent. We will review and revert.", 3500);
+        sendingMail.value = false;
+      })
+      .catch((err) => {
+        toastHandler("error", err.message, 3500);
+        sendingMail.value = false;
+      });
+  }
+};
+
+const checked = (index) => {
+  for (let z = 0; z < itemList.length; z++) {
+    itemList[z].selected = false;
+  }
+  itemList[index].selected = true;
+  qouteObj.value.means = itemList[index].name;
+};
+</script>
 <template>
   <section>
     <div class="container mt-14 mb-8 mx-auto w-11/12">
@@ -28,7 +197,7 @@
       </div>
     </div>
 
-    <div class="w-11/12 md:w-10/12 mx-auto lg:flex gap-0 lg:mb-28 mb-10">
+    <div class="w-11/12 mx-auto lg:flex gap-0 lg:mb-28 mb-10">
       <div class="lg:w-6/12 mx-auto w-full order-2">
         <img
           class="lg:h-[33rem] lg:mb-0 mb-4 mx-auto rounded-md"
@@ -55,7 +224,7 @@
             />
             <span
               v-if="!validContactEmail"
-              class="absolute top-[-14px] right-0 px-2 rounded-md bg-yellow-500 text-white text-sm"
+              class="absolute top-[-14px] right-0 px-2 rounded-md bg-mediumspringgreen text-white text-sm"
               >Please enter a valid email address</span
             >
             <span
@@ -435,176 +604,6 @@
     </div>
   </section>
 </template>
-<script setup>
-import { ref, reactive, onMounted, watch } from "vue";
-import { Countries } from "@/composables/countries";
-import { toastHandler } from "@/composables/useToast"
-
-let options = [
-  {
-    name: "Land",
-    selected: true,
-  },
-  {
-    name: "Air",
-    selected: false,
-  },
-  {
-    name: "Sea",
-    selected: false,
-  },
-];
-
-const itemList = reactive(options);
-const fromCountry = ref("");
-const toCountry = ref("");
-const sendingMail = ref(false);
-const requesting = ref(false);
-const validEmail = ref(false);
-const validContactEmail = ref(false);
-const allowContactUs = ref(false);
-const allowQuoteUs = ref(false);
-const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-
-const dataObj = reactive({
-  name: "",
-  email: "",
-  message: "",
-});
-
-const qouteObj = reactive({
-  email: "",
-  means: "Land",
-  width: "",
-  wei: "",
-  type: "",
-  hei: "",
-  len: "",
-  from: "",
-  to: "",
-});
-
-//Watchers
-
-watch(
-  () => qouteObj.email,
-  async (newVal, oldVal) => {
-    let answer = emailRegex.test(qouteObj.email);
-    validEmail.value = answer;
-  }
-);
-watch(
-  () => dataObj.email,
-  async (newVal, oldVal) => {
-    let answer = emailRegex.test(dataObj.email);
-    validContactEmail.value = answer;
-  }
-);
-watch(dataObj, async (newVal, oldVal) => {
-  let { message, name } = newVal;
-  if (
-    message.length > 6 &&
-    name.length > 2 &&
-    validContactEmail.value == true
-  ) {
-    allowContactUs.value = true;
-  } else {
-    allowContactUs.value = false;
-  }
-});
-watch(qouteObj, async (newVal, oldVal) => {
-  let { wei, type, from, to } = newVal;
-  if (
-    wei.length != 0 &&
-    type.length != 0 &&
-    from.length != 0 &&
-    to.length != 0 &&
-    validEmail.value == true
-  ) {
-    allowQuoteUs.value = true;
-  } else {
-    allowQuoteUs.value = false;
-  }
-});
-
-const requestQuote = async () => {
-  const formatted = `
-  <div>
-    <strong><pre>Means: ${qouteObj?.means}</pre></strong>
-    <strong><pre>Email: ${qouteObj?.email}</pre></strong>
-    <strong><pre>Type of package: ${qouteObj?.type}</pre></strong>
-    <strong><pre>Weight: ${qouteObj?.wei}</pre></strong>
-    <strong><pre>Width: ${qouteObj?.width}</pre></strong>
-    <strong> <pre>Height: ${qouteObj?.hei}</pre></strong>
-    <strong> <pre>Length: ${qouteObj?.len}</pre></strong>
-    <strong> <pre>From: ${
-      qouteObj?.from + ", " + fromCountry.value
-    }</pre></strong>
-    <strong> <pre>To: ${qouteObj?.to + ", " + toCountry.value}</pre></strong>
-  </div>`;
-
-  if (allowQuoteUs.value === false) {
-    toastHandler("info", "Please fill all fields.", 3500);
-  } else {
-    requesting.value = true;
-    const { data: id } = await useFetch("/api/sendMail", {
-      method: "post",
-      body: {
-        subject: "Requesting quote",
-        message: formatted,
-      },
-    })
-      .then(() => {
-        toastHandler("success",
-          "Quote requested. We will send a quote to the provided email."
-        );
-        requesting.value = false;
-      })
-      .catch((err) => {
-        toastHandler("error", "An error occurred", 4500);
-        requesting.value = false;
-      });
-  }
-};
-
-const sendMail = async () => {
-  const formatted = `
-  <div>
-    <strong><pre>Name: ${dataObj?.name}</pre></strong>
-    <strong><pre>Email: ${dataObj?.email}</pre></strong>
-    <strong><pre>Message: ${dataObj?.message}</pre></strong>
-  </div>`;
-
-  if (allowContactUs.value === false) {
-    toastHandler("Please fill all fields.", 3500);
-  } else {
-    sendingMail.value = true;
-    const { data: id } = await useFetch("/api/sendMail", {
-      method: "post",
-      body: {
-        subject: "Enquiries",
-        message: formatted,
-      },
-    })
-      .then(() => {
-        toastHandler("success", "Mail sent. We will review and revert.", 3500);
-        sendingMail.value = false;
-      })
-      .catch((err) => {
-        toastHandler("error", err.message, 3500);
-        sendingMail.value = false;
-      });
-  }
-};
-
-const checked = (index) => {
-  for (let z = 0; z < itemList.length; z++) {
-    itemList[z].selected = false;
-  }
-  itemList[index].selected = true;
-  qouteObj.value.means = itemList[index].name;
-};
-</script>
 
 <style scoped>
 input,
