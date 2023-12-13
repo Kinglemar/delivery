@@ -21,22 +21,49 @@ function populateModal(props: any) {
 }
 function deleteRecord(props: any) {
   const { data } = props;
-  console.log(data);
-  toastHandler("success", "Hello");
+  axios
+    .delete(`https://sj-ifez.onrender.com/v1/shipments/${data.id}`)
+    .then((res) => {
+      fetchDelivery()
+      toastHandler("success", "Record deleted");
+    }).catch((err) => {
+      console.log(err);
+    });
 }
 
 function closeModal() {
   shipments.value = defaultShipment.value;
   showAddModal.value = false;
+  editMode.value = false;
 }
 
-async function addComment(data: any) {
+function onUpload(img: any) {
+  console.log(img.target.files[0]);
+  const reader = new FileReader();
+  reader.readAsDataURL(img.target.files[0]);
+
+  reader.onload = () => {
+    let base64Url = null;
+    base64Url = reader.result as any;
+    shipments.value.cargo_details.item_img = base64Url;
+    console.log(base64Url);
+  };
+
+  reader.onerror = (error) => {
+    console.error("Error converting image to base64:", error);
+  };
+}
+
+async function addComment() {
   try {
-    let commentBody = Object.assign(data.value, {}) 
+    let commentBody: any = shipments.value;
     commentBody.timeline.push(comment.value);
     commenting.value = true;
     axios
-      .put(`https://sj-ifez.onrender.com/v1/shipments/${data.id}`, commentBody)
+      .put(
+        `https://sj-ifez.onrender.com/v1/shipments/${commentBody.id}`,
+        commentBody
+      )
       .then((res) => {
         console.log(res.data);
         toastHandler("success", "Comment added");
@@ -55,22 +82,23 @@ function decider() {
 }
 async function addDelivery(data: any) {
   try {
+    console.log("add");
     requesting.value = true;
     axios
       .post("https://sj-ifez.onrender.com/v1/shipments", shipments.value)
       .then((res) => {
-        console.log(res.data);
+        toastHandler("success", "Record Saved");
+        showAddModal.value = false;
+        shipments.value = defaultShipment.value;
+        requesting.value = false;
       });
-    toastHandler("success", "Record Saved");
-    showAddModal.value = false;
-    shipments.value = defaultShipment.value;
-    requesting.value = false;
   } catch (error) {
     requesting.value = false;
   }
 }
 async function editDelivery(data: any) {
   try {
+    console.log("edit");
     requesting.value = true;
     axios
       .put(`https://sj-ifez.onrender.com/v1/shipments/${data.id}`, data)
@@ -89,7 +117,6 @@ async function fetchDelivery() {
     try {
       axios.get("https://sj-ifez.onrender.com/v1/shipments").then((res) => {
         let format = res.data?.data;
-        console.log(format);
         shipmentsArray.value = format;
       });
     } catch (error) {
@@ -104,14 +131,14 @@ const commenting = ref(false);
 const activeIndex = ref(0);
 const comment = ref({
   title: null,
-  createdAt: Date.now(),
+  createdAt: new Date().toISOString(),
 });
 const shipments = ref({
-  comments: [],
+  timeline: [],
   cargo_details: {
     tracking_id: generateTrackingID(),
     item: null,
-    item_img: null,
+    item_img: undefined,
     order_type: null,
     deposit_no: null,
     delivery_percentange: null,
@@ -279,13 +306,7 @@ const shipmentsArray = ref([]);
                   class="md:w-fit w-full h-12 p-4 mb-1 shrink-0 border rounded-lg border-solid border-[#E0E0E0]"
                 />
               </div>
-              <div class="mb-2">
-                <input
-                  v-model="shipments.cargo_details.item_img"
-                  placeholder="Image"
-                  class="md:w-fit w-full h-12 p-4 mb-1 shrink-0 border rounded-lg border-solid border-[#E0E0E0]"
-                />
-              </div>
+
               <div class="mb-2">
                 <input
                   v-model="shipments.cargo_details.order_type"
@@ -307,6 +328,21 @@ const shipmentsArray = ref([]);
                   class="md:w-fit w-full h-12 p-4 mb-1 shrink-0 border rounded-lg border-solid border-[#E0E0E0]"
                 />
               </div>
+              <div class="mb-2">
+                <input
+                  @change="onUpload"
+                  placeholder="Image"
+                  type="file"
+                  class="md:w-fit w-full h-12 p-4 mb-1 shrink-0 border rounded-lg border-solid border-[#E0E0E0]"
+                />
+                <!-- <FileUpload
+                  :value="shipments.cargo_details.item_img"
+                  mode="basic"
+                  accept="image/*"
+                  :maxFileSize="1000000"
+                  @upload="onUpload"
+                /> -->
+              </div>
             </section>
             <div class="flex justify-end">
               <button
@@ -324,6 +360,7 @@ const shipmentsArray = ref([]);
                 Sender
               </p>
             </template>
+            <h3 class="text-xl my-3">Sender Details</h3>
             <section
               class="grid lg:grid-cols-4 md:grid-cols-3 gap-2"
               id="shipment-form"
@@ -339,7 +376,7 @@ const shipmentsArray = ref([]);
                 <input
                   v-model="shipments.sender.city"
                   placeholder="City"
-                  type="number"
+                  type="text"
                   class="md:w-fit w-full h-12 p-4 mb-1 shrink-0 border rounded-lg border-solid border-[#E0E0E0]"
                 />
               </div>
@@ -381,7 +418,7 @@ const shipmentsArray = ref([]);
             </section>
             <div class="flex justify-between">
               <button
-                class="w-fit mt-2 text-xs text-white bg-salmon px-5 py-2 rounded-[8px]"
+                class="w-fit mt-2 text-xs text-white bg-springgreen px-5 py-2 rounded-[8px]"
                 label="Ok"
                 @click="activeIndex = 0"
               >
@@ -402,6 +439,7 @@ const shipmentsArray = ref([]);
                 Reciever
               </p>
             </template>
+            <h3 class="text-xl my-3">Reciever Details</h3>
             <section
               class="grid lg:grid-cols-4 md:grid-cols-3 gap-2"
               id="shipment-form"
@@ -417,7 +455,7 @@ const shipmentsArray = ref([]);
                 <input
                   v-model="shipments.reciever.city"
                   placeholder="City"
-                  type="number"
+                  type="text"
                   class="md:w-fit w-full h-12 p-4 mb-1 shrink-0 border rounded-lg border-solid border-[#E0E0E0]"
                 />
               </div>
@@ -459,7 +497,7 @@ const shipmentsArray = ref([]);
             </section>
             <div class="flex justify-between">
               <button
-                class="w-fit mt-2 text-xs text-white bg-salmon px-5 py-2 rounded-[8px]"
+                class="w-fit mt-2 text-xs text-white bg-springgreen px-5 py-2 rounded-[8px]"
                 label="Ok"
                 @click="activeIndex = 1"
               >
@@ -482,7 +520,7 @@ const shipmentsArray = ref([]);
             </template>
             <section class="gap-2" id="timeline">
               <div class="md:flex items-center gap-5">
-                <div class="mb-2 w-5/12">
+                <div class="mb-2 md:w-5/12">
                   <input
                     v-model="comment.title"
                     placeholder="Comment"
@@ -490,21 +528,37 @@ const shipmentsArray = ref([]);
                   />
                 </div>
                 <button
-                  class="w-fit text-xs text-white bg-purple px-3 py-2 rounded-[8px]"
-                  @click="addComment(shipments)"
+                  class="md:w-fit w-full text-xs text-white bg-purple px-3 py-2 rounded-[8px]"
+                  @click="addComment"
                 >
                   <p v-if="commenting">Requesting...</p>
                   <p v-else>Add Comment</p>
                 </button>
               </div>
 
-              <div class="mt-5">
-                <ArtisanOrderProgress :timeline="[]" />
+              <h3 class="mt-5 text-center text-base">Uploaded Image.</h3>
+
+              <div
+                class="w-full h-64 mt-3 flex flex-col items-center justify-center rounded-lg shadow-md"
+              >
+                <img
+                  v-if="shipments.cargo_details.item_img"
+                  :src="shipments.cargo_details.item_img"
+                  alt=""
+                />
+                <h1 v-else class="text-center text-salmon">
+                  No uploaded image
+                </h1>
+              </div>
+
+              <h3 class="mt-8 text-center text-base">Comments</h3>
+              <div class="mt-3 mx-2 mb-10 rounded-lg border border-greenyellow">
+                <ArtisanOrderProgress :timeline="shipments.timeline" />
               </div>
             </section>
             <div class="flex justify-between">
               <button
-                class="w-fit mt-2 text-xs text-white bg-salmon px-5 py-2 rounded-[8px]"
+                class="w-fit mt-2 text-xs text-white bg-springgreen px-5 py-2 rounded-[8px]"
                 label="Ok"
                 @click="activeIndex = 2"
               >

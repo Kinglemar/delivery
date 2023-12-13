@@ -8,6 +8,9 @@ import ToastService from 'primevue/toastservice';
 import ConfirmationService from 'primevue/confirmationservice';
 import ConfirmDialog from 'primevue/confirmdialog';
 
+import FileUpload from 'primevue/fileupload';
+
+
 import TabView from 'primevue/tabview';
 import TabPanel from 'primevue/tabpanel';
 
@@ -37,5 +40,6 @@ export default defineNuxtPlugin((nuxtApp) => {
     nuxtApp.vueApp.component("TabView", TabView);
     nuxtApp.vueApp.component("TabPanel", TabPanel);
     nuxtApp.vueApp.component("ConfirmDialog", ConfirmDialog);
+    nuxtApp.vueApp.component("FileUpload", FileUpload);
     //other components that you need
 });

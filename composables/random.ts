@@ -9,11 +9,11 @@ export function generateTrackingID() {
 
 
 export const defaultShipment = ref({
-  comments: [],
+  timeline: [],
   cargo_details: {
     tracking_id: generateTrackingID(),
     item: null,
-    item_img: null,
+    item_img: undefined,
     order_type: null,
     deposit_no: null,
     delivery_percentange: null,

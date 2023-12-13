@@ -1,38 +1,40 @@
 <script setup lang="ts">
-
-
+import { useDateFormat } from "@vueuse/core";
 defineProps<{
   timeline: any[];
 }>();
 </script>
 
 <template>
-  <div class="max-h-96 overflow-hidden overflow-y-auto">
-    <div v-for="(p, index) in timeline" :key="index" class="flex items-start">
-      <div class="mr-3">
+  <div class="max-h-96 overflow-hidden overflow-y-auto pt-3">
+    <div v-for="(p, index) in timeline" :key="index" :class="[index === timeline.length - 1 ? 'mb-8' : 'mb-0']" class="flex items-start ml-4">
+      <div
+        class="mr-3"
+      >
         <div
-          class="flex h-4 w-4 items-center justify-center rounded-full bg-cream-500"
+          class="flex h-6 w-6 items-center justify-center rounded-full bg-whitesmoke"
         >
           <div
             :class="[
-              'h-2 w-2 rounded-full ',
-              index === timeline.length - 1
-                ? 'bg-orange-500'
-                : 'bg-pigeon-gray',
+              'h-4 w-4 rounded-full ',
+              index === timeline.length - 1 ? 'bg-salmon' : 'bg-springgreen',
             ]"
           ></div>
         </div>
         <div
           v-if="index < timeline.length - 1"
-          class="mx-auto h-full min-h-[80px] w-[1px] bg-gray"
+          class="mx-auto h-full min-h-[80px] w-[1px] bg-blue-03"
         ></div>
       </div>
 
       <div>
-        <!-- <div class="mb-2 text-xs text-seal-gray">
-          {{ useDateFormatter(p.createdAt, 'DD MMM, YYYY') }} at
-          {{ useDateFormatter(p.createdAt, 'HH:mm:ss') }}
-        </div> -->
+        <div class="mb-2 text-xs text-seal-gray">
+          {{
+            useDateFormat(p?.createdAt, "YYYY-MM-DD (ddd:hh:mm:ss)", {
+              locales: "en-US",
+            })
+          }}
+        </div>
         <div class="text-sm text-dark">{{ p.title || "Hello" }}</div>
       </div>
     </div>

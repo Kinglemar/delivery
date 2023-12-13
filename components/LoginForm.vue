@@ -1,31 +1,3 @@
-<template>
-  <div class="w-full flex flex-col items-center">
-    <div class="w-full mb-2">
-      <input
-        v-model="form.email"
-        placeholder="email"
-        class="w-full h-12 p-4 mb-1 shrink-0 border rounded-lg border-solid border-[#E0E0E0]"
-      />
-    </div>
-    <div class="w-full mb-2">
-      <input
-        v-model="form.password"
-        placeholder="password"
-        class="w-full h-12 p-4 mb-1 shrink-0 border rounded-lg border-solid border-[#E0E0E0]"
-      />
-    </div>
-    <div class="w-full mb-2">
-      <button
-        @click="loginAdmin"
-        class="w-full mt-2 text-white bg-gray-200 px-10 py-3 rounded-[5px]"
-      >
-        <p v-if="requesting">Requesting...</p>
-        <p v-else>Login</p>
-      </button>
-    </div>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { useToast } from "primevue/usetoast";
 const toast = useToast();
@@ -64,3 +36,30 @@ async function loginAdmin() {
   }
 }
 </script>
+<template>
+  <div class="w-full flex flex-col items-center">
+    <div class="w-full mb-2">
+      <input
+        v-model="form.email"
+        placeholder="email"
+        class="w-full h-12 p-4 mb-1 shrink-0 border rounded-lg border-solid border-[#E0E0E0]"
+      />
+    </div>
+    <div class="w-full mb-2">
+      <input
+        v-model="form.password"
+        placeholder="password"
+        class="w-full h-12 p-4 mb-1 shrink-0 border rounded-lg border-solid border-[#E0E0E0]"
+      />
+    </div>
+    <div class="w-full mb-2">
+      <button
+        @click="loginAdmin"
+        class="w-full mt-2 text-white bg-gray-200 px-10 py-3 rounded-[5px]"
+      >
+        <p v-if="requesting">Requesting...</p>
+        <p v-else>Login</p>
+      </button>
+    </div>
+  </div>
+</template>

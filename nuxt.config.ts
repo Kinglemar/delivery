@@ -7,7 +7,7 @@ export default defineNuxtConfig({
     "@pinia-plugin-persistedstate/nuxt",
     "nuxt-security",
   ],
-  // ssr: false,
+  ssr: false,
   // nitro: {
   //     preset: 'node-server'
   // },
