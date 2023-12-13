@@ -5,7 +5,7 @@
         <SideMenu />
         <main
         style="border-radius: 16px;"
-          class="absolute right-0 overflow-x-hidden w-10/12 bg-white mb-8 rounded-17xl p-5 pt-0 ml-3 mx-auto lg:mr-8"
+          class="absolute mt-5 right-0 overflow-x-hidden w-10/12 bg-white mb-8 rounded-17xl p-5 pt-0 ml-3 mx-auto lg:mr-8"
         >
           <slot />
         </main>

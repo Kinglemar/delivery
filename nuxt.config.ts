@@ -6,12 +6,12 @@ export default defineNuxtConfig({
     "@nuxt/image",
     "@pinia-plugin-persistedstate/nuxt",
     "nuxt-security",
+    // "@nuxtjs/axios"
   ],
-  ssr: false,
+  // ssr: false,
   // nitro: {
   //     preset: 'node-server'
   // },
-
   components: { global: true, dirs: ["~/components"] },
   app: {
     head: {

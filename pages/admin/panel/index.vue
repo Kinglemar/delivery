@@ -1,8 +1,7 @@
 <script setup lang="ts">
+import axios from "axios";
 import { generateTrackingID, defaultShipment } from "@/composables/random";
 import { useUserStore } from "@/stores/user";
-import { toastHandler } from "@/composables/useToast";
-import axios from "axios";
 
 definePageMeta({
   layout: "admin",
@@ -12,7 +11,13 @@ onMounted(() => {
 });
 const requesting = ref(false);
 const store = useUserStore();
-const { token } = storeToRefs(store);
+const { token, user } = storeToRefs(store);
+
+axios.defaults.baseURL = "https://sj-ifez.onrender.com/v1";
+axios.defaults.headers.delete.Authorization = `Bearer ${token.value.access.token}`;
+axios.defaults.headers.get.Authorization = `Bearer ${token.value.access.token}`;
+axios.defaults.headers.put.Authorization = `Bearer ${token.value.access.token}`;
+
 function populateModal(props: any) {
   const { data } = props;
   shipments.value = data;
@@ -24,9 +29,10 @@ function deleteRecord(props: any) {
   axios
     .delete(`https://sj-ifez.onrender.com/v1/shipments/${data.id}`)
     .then((res) => {
-      fetchDelivery()
+      fetchDelivery();
       toastHandler("success", "Record deleted");
-    }).catch((err) => {
+    })
+    .catch((err) => {
       console.log(err);
     });
 }
@@ -38,7 +44,6 @@ function closeModal() {
 }
 
 function onUpload(img: any) {
-  console.log(img.target.files[0]);
   const reader = new FileReader();
   reader.readAsDataURL(img.target.files[0]);
 
@@ -55,22 +60,23 @@ function onUpload(img: any) {
 }
 
 async function addComment() {
-  try {
-    let commentBody: any = shipments.value;
-    commentBody.timeline.push(comment.value);
-    commenting.value = true;
-    axios
-      .put(
-        `https://sj-ifez.onrender.com/v1/shipments/${commentBody.id}`,
-        commentBody
-      )
-      .then((res) => {
+  if (comment.value !== null) {
+    try {
+      let commentBody: any = shipments.value;
+      commentBody.timeline.push(comment.value);
+      commenting.value = true;
+      axios.put(`/shipments/${commentBody.id}`, commentBody).then((res) => {
         console.log(res.data);
         toastHandler("success", "Comment added");
         commenting.value = false;
+        comment.value = {
+          title: null,
+          createdAt: new Date().toISOString(),
+        };
       });
-  } catch (error) {
-    commenting.value = false;
+    } catch (error) {
+      commenting.value = false;
+    }
   }
 }
 
@@ -84,14 +90,12 @@ async function addDelivery(data: any) {
   try {
     console.log("add");
     requesting.value = true;
-    axios
-      .post("https://sj-ifez.onrender.com/v1/shipments", shipments.value)
-      .then((res) => {
-        toastHandler("success", "Record Saved");
-        showAddModal.value = false;
-        shipments.value = defaultShipment.value;
-        requesting.value = false;
-      });
+    axios.post("/shipments", shipments.value).then((res) => {
+      toastHandler("success", "Record Saved");
+      showAddModal.value = false;
+      shipments.value = defaultShipment.value;
+      requesting.value = false;
+    });
   } catch (error) {
     requesting.value = false;
   }
@@ -100,14 +104,12 @@ async function editDelivery(data: any) {
   try {
     console.log("edit");
     requesting.value = true;
-    axios
-      .put(`https://sj-ifez.onrender.com/v1/shipments/${data.id}`, data)
-      .then((res) => {
-        toastHandler("success", "Record Saved");
-        showAddModal.value = false;
-        shipments.value = defaultShipment.value;
-        requesting.value = false;
-      });
+    axios.put(`/shipments/${data.id}`, data).then((res) => {
+      toastHandler("success", "Record Saved");
+      showAddModal.value = false;
+      shipments.value = defaultShipment.value;
+      requesting.value = false;
+    });
   } catch (error) {
     requesting.value = false;
   }
@@ -115,7 +117,7 @@ async function editDelivery(data: any) {
 async function fetchDelivery() {
   if (true) {
     try {
-      axios.get("https://sj-ifez.onrender.com/v1/shipments").then((res) => {
+      axios.get("/shipments").then((res) => {
         let format = res.data?.data;
         shipmentsArray.value = format;
       });
@@ -210,7 +212,7 @@ const shipmentsArray = ref([]);
         <Column field="cargo_details.destination" header="Shipping to"></Column>
         <Column field="actions" header="actions">
           <template #body="slotProps">
-            <button @click="populateModal(slotProps)" class="mr-2">
+            <button @click="populateModal(slotProps)" class="mr-4">
               <svg
                 class="fill-mediumspringgreen"
                 xmlns="http://www.w3.org/2000/svg"
@@ -227,7 +229,7 @@ const shipmentsArray = ref([]);
               <svg
                 class="fill-salmon"
                 xmlns="http://www.w3.org/2000/svg"
-                height="27"
+                height="25"
                 width="22"
                 viewBox="0 0 448 512"
               >

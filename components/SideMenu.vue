@@ -20,17 +20,14 @@
           activeClass="bg-blue-01 text-white"
           class="sm:px-8 px-6 w-full relative inline-flex items-center gap-3 overflow-hidden py-3 bg-blue-200"
         >
-
-
           <svg
-          class="flex-shrink-0 mt-1 text-inherit"
+            class="flex-shrink-0 mt-1 text-inherit"
             xmlns="http://www.w3.org/2000/svg"
             height="22"
             width="22"
             viewBox="0 0 576 512"
             fill="#fff"
           >
-           
             <path
               d="M294.2 277.7c18 5 34.7 13.4 49.5 24.7l161.5-53.8c8.4-2.8 12.9-11.9 10.1-20.2L454.9 47.2c-2.8-8.4-11.9-12.9-20.2-10.1l-61.1 20.4 33.1 99.4L346 177l-33.1-99.4-61.6 20.5c-8.4 2.8-12.9 11.9-10.1 20.2l53 159.4zm281 48.7L565 296c-2.8-8.4-11.9-12.9-20.2-10.1l-213.5 71.2c-17.2-22-43.6-36.4-73.5-37L158.4 21.9C154 8.8 141.8 0 128 0H16C7.2 0 0 7.2 0 16v32c0 8.8 7.2 16 16 16h88.9l92.2 276.7c-26.1 20.4-41.7 53.6-36 90.5 6.1 39.4 37.9 72.3 77.3 79.2 60.2 10.7 112.3-34.8 113.4-92.6l213.3-71.2c8.3-2.8 12.9-11.8 10.1-20.2zM256 464c-26.5 0-48-21.5-48-48s21.5-48 48-48 48 21.5 48 48-21.5 48-48 48z"
             />
@@ -43,6 +40,8 @@
         </Nuxt-link>
       </div>
 
+      <pre>{{  }}</pre>
+
       <div
         class="shrink-0 bg-[#DAEDFF] p-3 rounded-[10px] lg:inline-flex items-center gap-3 sm:w-11/12 mx-auto"
       >
@@ -50,26 +49,29 @@
           <p
             class="text-[#1F6BB1] sm:text-[14px] text-[12px] not-italic font-bold leading-[normal] mb-1"
           >
-            <!-- {{ userData.email.value }} -->
+            {{ user?.username }}
           </p>
-          <Nuxt-Link
+          <button
+            @click="logoutAdmin"
             class="text-[#1F6BB1] flex-shrink-0 md:text-[12px] text-[10px] not-italic font-normal leading-[normal] sm:inline-flex gap-2"
-            to="/"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="15"
-              height="15"
-              viewBox="0 0 15 15"
-              fill="none"
-            >
-              <path
-                d="M7.18296 1.25C8.73456 1.25 10 2.49375 10 4.025V7.01875H6.18459C5.91116 7.01875 5.69495 7.23125 5.69495 7.5C5.69495 7.7625 5.91116 7.98125 6.18459 7.98125H10V10.9688C10 12.5 8.73456 13.75 7.17024 13.75H4.0734C2.51544 13.75 1.25 12.5063 1.25 10.975V4.03125C1.25 2.49375 2.5218 1.25 4.07976 1.25H7.18296ZM11.5876 5.34387C11.7751 5.15013 12.0814 5.15013 12.2689 5.33763L14.0939 7.15637C14.1876 7.25012 14.2376 7.36888 14.2376 7.50012C14.2376 7.62513 14.1876 7.75012 14.0939 7.83763L12.2689 9.65637C12.1751 9.75012 12.0501 9.80013 11.9314 9.80013C11.8064 9.80013 11.6814 9.75012 11.5876 9.65637C11.4001 9.46887 11.4001 9.16262 11.5876 8.97512L12.5876 7.98137L10 7.98125V7.01875L12.5876 7.01888L11.5876 6.02513C11.4001 5.83763 11.4001 5.53137 11.5876 5.34387Z"
-                fill="#1F6BB1"
-              />
-            </svg>
-            <span>Logout</span>
-          </Nuxt-Link>
+            <p v-if="requesting">Requesting...</p>
+            <span v-else class="flex gap-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="15"
+                height="15"
+                viewBox="0 0 15 15"
+                fill="none"
+              >
+                <path
+                  d="M7.18296 1.25C8.73456 1.25 10 2.49375 10 4.025V7.01875H6.18459C5.91116 7.01875 5.69495 7.23125 5.69495 7.5C5.69495 7.7625 5.91116 7.98125 6.18459 7.98125H10V10.9688C10 12.5 8.73456 13.75 7.17024 13.75H4.0734C2.51544 13.75 1.25 12.5063 1.25 10.975V4.03125C1.25 2.49375 2.5218 1.25 4.07976 1.25H7.18296ZM11.5876 5.34387C11.7751 5.15013 12.0814 5.15013 12.2689 5.33763L14.0939 7.15637C14.1876 7.25012 14.2376 7.36888 14.2376 7.50012C14.2376 7.62513 14.1876 7.75012 14.0939 7.83763L12.2689 9.65637C12.1751 9.75012 12.0501 9.80013 11.9314 9.80013C11.8064 9.80013 11.6814 9.75012 11.5876 9.65637C11.4001 9.46887 11.4001 9.16262 11.5876 8.97512L12.5876 7.98137L10 7.98125V7.01875L12.5876 7.01888L11.5876 6.02513C11.4001 5.83763 11.4001 5.53137 11.5876 5.34387Z"
+                  fill="#1F6BB1"
+                />
+              </svg>
+              <span>Logout</span>
+            </span>
+          </button>
         </div>
       </div>
     </div>
@@ -77,10 +79,33 @@
 </template>
 
 <script setup>
+import axios from "axios";
 import { useUserStore } from "@/stores/user";
 import { storeToRefs } from "pinia";
+const router = useRouter();
+
 const store = useUserStore();
-const userData = storeToRefs(store);
+const { token, user } = storeToRefs(store);
+const requesting = ref(false);
+
+async function logoutAdmin() {
+  try {
+    requesting.value = true;
+    axios
+      .post(`/auth/sign-off`, { refreshToken: token.value.refresh.token })
+      .then(async (res) => {
+        requesting.value = false;
+        toastHandler("success", "Logged out successfully");
+        await router.push("/admin");
+      })
+      .catch((err) => {
+        requesting.value = false;
+        console.log(err);
+      });
+  } catch (err) {
+    console.log(err);
+  }
+}
 </script>
 
 <style lang="scss" scoped></style>

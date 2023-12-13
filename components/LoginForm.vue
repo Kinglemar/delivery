@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import { useToast } from "primevue/usetoast";
-const toast = useToast();
-
 import { useUserStore } from "@/stores/user";
 import axios from "axios";
 const router = useRouter();
@@ -17,7 +14,6 @@ const { updateUser, setToken } = store;
 async function loginAdmin() {
   try {
     requesting.value = true;
-
     axios
       .post("https://sj-ifez.onrender.com/v1/auth/access", form.value)
       .then((res) => {
@@ -26,10 +22,6 @@ async function loginAdmin() {
         setToken(res.data.tokens);
         router.push("/admin/panel");
         requesting.value = false;
-        toast.add({
-          severity: "success",
-          summary: "login successful",
-        });
       });
   } catch (error) {
     requesting.value = false;
@@ -63,3 +55,4 @@ async function loginAdmin() {
     </div>
   </div>
 </template>
+~/composables/axiosinstance

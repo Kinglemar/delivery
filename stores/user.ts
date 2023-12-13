@@ -17,15 +17,17 @@ export const useUserStore = defineStore(
       },
     });
 
-    function updateUser(user: any) {
-      user.value = user;
+    function updateUser(userBody: any) {
+      console.log('User::', userBody);
+      user.value = userBody;
     }
-    function setToken(token: any) {
-      token.value = token;
+    function setToken(tokenBody: any) {
+      console.log('Token::', tokenBody);
+      token.value = tokenBody;
     }
-    // const getToken = computed(() => token?.value.access.token);
+    // const getToken = computed(() => token.value.access.token);
 
-    return { user, token, setToken, updateUser };
+    return { user, token, setToken, updateUser};
   },
   {
     persist: {
