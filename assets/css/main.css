@@ -3,36 +3,6 @@
 @tailwind utilities;
 @import url("https://fonts.googleapis.com/css2?family=Outfit:wght@200;400;500;600&display=swap");
 
-/* @font-face {
-    font-family: "Outfit";
-    src: local("Outfit"),
-      url(~static/Outfit-VariableFont_wght.ttf) format("truetype");
-      
-  }
-@font-face {
-    font-family: "Outfit";
-    src: local("Outfit"),
-      url(~static/Outfit-Medium.ttf) format("truetype");
-  }
-@font-face {
-    font-family: "Outfit";
-    src: local("Outfit"),
-      url(~static/Outfit-Light.ttf) format("truetype");
-  }
-@font-face {
-    font-family: "Outfit";
-    src: local("Outfit"),
-      url(~static/Outfit-Regular.ttf) format("truetype");
-  }
-@font-face {
-    font-family: "Outfit";
-    src: local("Outfit"),
-    url(~static/Outfit-SemiBold.ttf) format("truetype");
-  } */
-
-/* html {
-    font-family: 'Outfit', sans-serif;
-  } */
 
 body {
   background: #f4f7ff;
