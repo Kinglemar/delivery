@@ -31,8 +31,7 @@
             "
             class="banner-paragraph mt-5"
           >
-            We continue to pursue that same vision in today's complex, uncertain
-            world, working every day to earn our customers’
+          We ensure safety of packages and timely delivery.
           </p>
         </div>
         <div class="banner-button justify-center sm:flex block gap-2">

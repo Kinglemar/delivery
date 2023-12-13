@@ -195,12 +195,12 @@
               />
               <span
                 v-if="!validEmail"
-                class="absolute top-[-14px] right-0 px-2 rounded-md bg-yellow-500 text-white text-sm"
+                class="absolute top-[-14px] right-0 px-2 rounded-md bg-mediumspringgreen text-white text-sm"
                 >Please enter a valid email address</span
               >
               <span
                 v-else
-                class="absolute top-[-14px] right-0 px-2 rounded-md bg-green-500 text-white text-sm"
+                class="absolute top-[-14px] right-0 px-2 rounded-md bg-mediumspringgreen text-white text-sm"
                 >Valid</span
               >
             </div>
