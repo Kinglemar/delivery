@@ -460,7 +460,7 @@ const checked = (index) => {
           <div
             class="border rounded-lg bg-white shadow-lg relative p-4 md:mb-0 mb-5"
           >
-            <p class="text-lg">2972 Westheimer Rd. Santa Ana, Illinois 85486</p>
+            <p class="text-lg">2101 Roger Sedam Dr, Cody, WY</p>
             <span
               class="border text-emerald-400 bg-white p-2 rounded-full absolute top-[-20px] right-[-20px]"
             >
@@ -481,7 +481,7 @@ const checked = (index) => {
           <div
             class="border rounded-lg bg-white shadow-lg relative p-4 md:mb-0 mb-5"
           >
-            <p class="text-lg">Hello@mail.com</p>
+            <p class="text-lg">support@logistfreight.com</p>
             <span
               class="border text-emerald-400 bg-white p-2 rounded-full absolute top-[-20px] right-[-20px]"
             >
