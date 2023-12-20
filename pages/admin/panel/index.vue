@@ -80,12 +80,6 @@ async function addComment() {
   }
 }
 
-function decider() {
-  if (editMode.value === true) {
-    editDelivery(shipments.value);
-  }
-  addDelivery(shipments.value);
-}
 async function addDelivery(data: any) {
   try {
     console.log("add");
@@ -102,7 +96,7 @@ async function addDelivery(data: any) {
 }
 async function editDelivery(data: any) {
   try {
-    console.log("edit");
+    console.log("edit", data);
     requesting.value = true;
     axios.put(`/shipments/${data.id}`, data).then((res) => {
       toastHandler("success", "Record Saved");
@@ -130,6 +124,8 @@ async function fetchDelivery() {
 const showAddModal = ref(false);
 const editMode = ref(false);
 const commenting = ref(false);
+const latitude = ref(null);
+const longtitude = ref(null);
 const activeIndex = ref(0);
 const comment = ref({
   title: null,
@@ -140,6 +136,9 @@ const shipments = ref({
   cargo_details: {
     tracking_id: generateTrackingID(),
     item: null,
+    location: {
+      coordinates: []
+    },
     item_img: undefined,
     order_type: null,
     deposit_no: null,
@@ -147,6 +146,8 @@ const shipments = ref({
     source: null,
     destination: null,
     weight: null,
+    height: null,
+    len: null,
   },
   sender: {
     name: null,
@@ -326,6 +327,20 @@ const shipmentsArray = ref([]);
                 <input
                   v-model="shipments.cargo_details.weight"
                   placeholder="Weight"
+                  class="md:w-fit w-full h-12 p-4 mb-1 shrink-0 border rounded-lg border-solid border-[#E0E0E0]"
+                />
+              </div>
+              <div class="mb-2">
+                <input
+                  v-model="shipments.cargo_details.height"
+                  placeholder="Height"
+                  class="md:w-fit w-full h-12 p-4 mb-1 shrink-0 border rounded-lg border-solid border-[#E0E0E0]"
+                />
+              </div>
+              <div class="mb-2">
+                <input
+                  v-model="shipments.cargo_details.len"
+                  placeholder="Length"
                   class="md:w-fit w-full h-12 p-4 mb-1 shrink-0 border rounded-lg border-solid border-[#E0E0E0]"
                 />
               </div>
@@ -537,6 +552,25 @@ const shipmentsArray = ref([]);
                 </button>
               </div>
 
+              <div class="flex gap-3">
+                <div class="mb-2">
+                  <input
+                  type="number"
+                    v-model="shipments.cargo_details.location.coordinates[1]"
+                    placeholder="Longtitude"
+                    class="md:w-fit w-full h-12 p-4 mb-1 shrink-0 border rounded-lg border-solid border-[#E0E0E0]"
+                  />
+                </div>
+                <div class="mb-2">
+                  <input
+                  type="number"
+                    v-model="shipments.cargo_details.location.coordinates[0]"
+                    placeholder="latitude"
+                    class="md:w-fit w-full h-12 p-4 mb-1 shrink-0 border rounded-lg border-solid border-[#E0E0E0]"
+                  />
+                </div>
+              </div>
+
               <h3 class="mt-5 text-center text-base">Uploaded Image.</h3>
 
               <div
@@ -554,9 +588,11 @@ const shipmentsArray = ref([]);
 
               <div v-if="editMode">
                 <h3 class="mt-8 text-center text-base">Comments</h3>
-              <div  class="mt-3 mx-2 mb-10 rounded-lg border border-greenyellow">
-                <ArtisanOrderProgress :timeline="shipments.timeline" />
-              </div>
+                <div
+                  class="mt-3 mx-2 mb-10 rounded-lg border border-greenyellow"
+                >
+                  <ArtisanOrderProgress :timeline="shipments.timeline" />
+                </div>
               </div>
             </section>
             <div class="flex justify-between">
@@ -582,7 +618,7 @@ const shipmentsArray = ref([]);
             Cancel
           </button>
           <button
-          v-if="!editMode"
+            v-if="!editMode"
             class="w-full mt-2 text-base text-white bg-mediumspringgreen px-5 py- rounded-[8px]"
             @click="addDelivery"
           >
@@ -590,14 +626,14 @@ const shipmentsArray = ref([]);
             <p v-else>Save</p>
           </button>
           <button
-          v-else
+            v-else
             class="w-full mt-2 text-base text-white bg-mediumspringgreen px-5 py- rounded-[8px]"
-            @click="editDelivery"
+            @click="editDelivery(shipments)"
           >
             <p v-if="requesting">Requesting...</p>
             <p v-else>Edit</p>
           </button>
-          </div>
+        </div>
       </template>
     </Dialog>
   </main>

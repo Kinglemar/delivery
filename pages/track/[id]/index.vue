@@ -7,6 +7,7 @@ const audioTracking = ref(true);
 const showParcel = ref(false);
 const noParcel = ref(false);
 const QUOTE = ref(null);
+const parcelLocation = ref([-73.5804, 45.53483]);
 
 onMounted(() => {
   fetchDelivery();
@@ -17,8 +18,10 @@ async function fetchDelivery() {
     audioTracking.value = true;
     try {
       axios.get(`/shipments/tracking/${detail}`).then((res) => {
-        console.log(res.data);
         QUOTE.value = res.data;
+        const parcel = Object.assign(res.data.cargo_details.location, {});
+        console.log(parcel)
+        parcelLocation.value = parcel.coordinates
         showParcel.value = true;
         audioTracking.value = false;
       });
@@ -83,18 +86,19 @@ function convertProgress() {
       v-if="showParcel"
       class="md:mb-36 mb-20 mt-16 sm:mx-auto mx-auto w-11/12 shadow-lg p-3 rounded-lg"
     >
-      <div class="lg:flex gap-5 items-center">
-        <div class="lg:w-6/12 w-full p-4 order-2">
+      <CustomMap :geolocation="parcelLocation" />
+      <div class="lg:flex gap-5 items-center mt-6">
+        <div class="lg:w-6/12 w-full p-4 pt-0 order-2">
           <p class="text-lg font-bold mb-3">Parcel Details</p>
 
-          <div class="pb-8">
-            <p class="text-sm mb-3">Delivery Progress</p>
+          <div class="pb-8 ">
+            <p class="text-sm mb-4">Delivery Progress</p>
             <ProgressBar
               :value="QUOTE?.cargo_details?.delivery_percentange"
             ></ProgressBar>
           </div>
 
-          <div class="grid grid-cols-3 md:gap-10 gap-y-8 gap-x-2 grid-rows-2">
+          <div class="grid grid-cols-3 md:gap-10 mt-4 gap-y-8 gap-x-2 grid-rows-2">
             <div
               class="text-center relative border border-[#ddddec] p-3 rounded-lg"
             >
@@ -118,7 +122,7 @@ function convertProgress() {
             <div
               class="text-center relative border border-[#ddddec] p-3 rounded-lg"
             >
-              <p class="text-center">{{ QUOTE?.cargo_details.hei || 0 }}</p>
+              <p class="text-center">{{ QUOTE?.cargo_details.height || 0 }}</p>
               <span
                 class="text-lightgray bg-blue-08 px-2 py-1 rounded-lg absolute top-[-20px] md:right-[-20px] right-0"
                 >Height</span

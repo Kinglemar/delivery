@@ -1,38 +1,7 @@
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@200;400;500;600&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@200;400;500;600&display=swap");
-
-/* @font-face {
-    font-family: "Outfit";
-    src: local("Outfit"),
-      url(~static/Outfit-VariableFont_wght.ttf) format("truetype");
-      
-  }
-@font-face {
-    font-family: "Outfit";
-    src: local("Outfit"),
-      url(~static/Outfit-Medium.ttf) format("truetype");
-  }
-@font-face {
-    font-family: "Outfit";
-    src: local("Outfit"),
-      url(~static/Outfit-Light.ttf) format("truetype");
-  }
-@font-face {
-    font-family: "Outfit";
-    src: local("Outfit"),
-      url(~static/Outfit-Regular.ttf) format("truetype");
-  }
-@font-face {
-    font-family: "Outfit";
-    src: local("Outfit"),
-    url(~static/Outfit-SemiBold.ttf) format("truetype");
-  } */
-
-/* html {
-    font-family: 'Outfit', sans-serif;
-  } */
 
 body {
   background: #f4f7ff;
@@ -98,4 +67,65 @@ body {
 
 .p-progressbar .p-component .p-progressbar-indeterminate{
   height: 8px;
+}
+
+.mapboxgl-default-map-size {
+  position: relative !important;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+.mapboxgl-ctrl-attrib-inner a{
+  display: none;
+}
+
+.mapboxgl-ctrl-logo {
+  display: none;
+}
+
+a.mapboxgl-ctrl-logo {
+  background-image: url('/assets/img/63f1a1d0c16726823353ef45_Logist.svg');
+  background-repeat: no-repeat;
+  cursor: pointer;
+  display: none !important;
+  height: 23px;
+  margin: 0 0 -4px -4px;
+  overflow: hidden;
+  width: 88px;
+}
+
+.mapboxgl-popup-content {
+  background: #1e1e1e !important;
+  border-radius: 12px;
+  color: #fff;
+  box-shadow: 0 1px 2px rgba(0,0,0,.1);
+  padding: 10px !important;
+  pointer-events: auto;
+  position: relative;
+}
+
+.mapboxgl-popup-close-button {
+  background-color: transparent;
+  border: 0;
+  border-radius: 0 3px 0 0;
+  cursor: pointer;
+  width: 1rem;
+  position: absolute;
+  right: 2px !important;
+  top: -2px !important;
+}
+
+.mapboxgl-marker {
+  left: 0;
+  /* background: #1e1e1e !important; */
+  opacity: 1;
+  position: absolute;
+  top: 0;
+  transition: opacity .2s;
+  will-change: transform;
+}
+
+.mapboxgl-marker svg{
+  fill: #1e1e1e !important;
 }

@@ -47,7 +47,7 @@
       >
         <div>
           <p
-            class="text-[#1F6BB1] sm:text-[14px] text-[12px] not-italic font-bold leading-[normal] mb-1"
+            class="text-[#1F6BB1] capitalize  sm:text-[14px] text-[12px] not-italic font-bold leading-[normal] mb-1"
           >
             {{ user?.username }}
           </p>

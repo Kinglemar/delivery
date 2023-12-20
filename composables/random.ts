@@ -13,6 +13,9 @@ export const defaultShipment = ref({
   cargo_details: {
     tracking_id: generateTrackingID(),
     item: null,
+    location: {
+      coordinates: []
+    },
     item_img: undefined,
     order_type: null,
     deposit_no: null,
@@ -20,6 +23,8 @@ export const defaultShipment = ref({
     source: null,
     destination: null,
     weight: null,
+    height: null,
+    len: null
   },
   sender: {
     name: null,
