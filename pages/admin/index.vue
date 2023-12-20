@@ -1,6 +1,6 @@
 <template>
   <main
-    class="w-full h-screen bg-gradient-to-r from-blue-01 via-blueviolet-01 to-salmon flex justify-center items-center"
+    class="w-full h-[60vh] bg-gradient-to-r from-blue-01 via-blueviolet-01 to-salmon flex justify-center items-center"
   >
     <section class="md:w-4/12 w-10/12">
       

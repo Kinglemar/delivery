@@ -164,7 +164,6 @@ export default {};
     padding-left: 40px;
 }
 .footer-top {
-    padding-top: 60px;
     padding-bottom: 30px;
 }
 .footer-top-content {

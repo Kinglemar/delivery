@@ -24,6 +24,7 @@ export const defaultShipment = ref({
     destination: null,
     weight: null,
     height: null,
+    width: null,
     len: null
   },
   sender: {

@@ -137,7 +137,7 @@ const shipments = ref({
     tracking_id: generateTrackingID(),
     item: null,
     location: {
-      coordinates: []
+      coordinates: [],
     },
     item_img: undefined,
     order_type: null,
@@ -147,6 +147,7 @@ const shipments = ref({
     destination: null,
     weight: null,
     height: null,
+    width: null,
     len: null,
   },
   sender: {
@@ -346,20 +347,27 @@ const shipmentsArray = ref([]);
               </div>
               <div class="mb-2">
                 <input
-                  @change="onUpload"
-                  placeholder="Image"
-                  type="file"
+                  v-model="shipments.cargo_details.width"
+                  placeholder="Width"
                   class="md:w-fit w-full h-12 p-4 mb-1 shrink-0 border rounded-lg border-solid border-[#E0E0E0]"
                 />
-                <!-- <FileUpload
+              </div>
+            </section>
+            <div class="mb-2">
+              <input
+                @change="onUpload"
+                placeholder="Image"
+                type="file"
+                class="md:w-fit w-full h-12 p-4 mb-1 shrink-0 border rounded-lg border-solid border-[#E0E0E0]"
+              />
+              <!-- <FileUpload
                   :value="shipments.cargo_details.item_img"
                   mode="basic"
                   accept="image/*"
                   :maxFileSize="1000000"
                   @upload="onUpload"
                 /> -->
-              </div>
-            </section>
+            </div>
             <div class="flex justify-end">
               <button
                 class="w-fit mt-2 text-xs text-white bg-salmon px-5 py-2 rounded-[8px]"
@@ -555,7 +563,7 @@ const shipmentsArray = ref([]);
               <div class="flex gap-3">
                 <div class="mb-2">
                   <input
-                  type="number"
+                    type="number"
                     v-model="shipments.cargo_details.location.coordinates[1]"
                     placeholder="Longtitude"
                     class="md:w-fit w-full h-12 p-4 mb-1 shrink-0 border rounded-lg border-solid border-[#E0E0E0]"
@@ -563,7 +571,7 @@ const shipmentsArray = ref([]);
                 </div>
                 <div class="mb-2">
                   <input
-                  type="number"
+                    type="number"
                     v-model="shipments.cargo_details.location.coordinates[0]"
                     placeholder="latitude"
                     class="md:w-fit w-full h-12 p-4 mb-1 shrink-0 border rounded-lg border-solid border-[#E0E0E0]"
