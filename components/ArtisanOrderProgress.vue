@@ -7,10 +7,13 @@ defineProps<{
 
 <template>
   <div class="max-h-96 overflow-hidden overflow-y-auto pt-3">
-    <div v-for="(p, index) in timeline" :key="index" :class="[index === timeline.length - 1 ? 'mb-8' : 'mb-0']" class="flex items-start ml-4">
-      <div
-        class="mr-3"
-      >
+    <div
+      v-for="(p, index) in timeline"
+      :key="index"
+      :class="[index === timeline.length - 1 ? 'mb-8' : 'mb-0']"
+      class="flex items-start ml-4"
+    >
+      <div class="mr-3">
         <div
           class="flex h-6 w-6 items-center justify-center rounded-full bg-whitesmoke"
         >
@@ -32,10 +35,12 @@ defineProps<{
           {{
             useDateFormat(p?.createdAt, "YYYY-MM-DD (ddd:hh:mm:ss)", {
               locales: "en-US",
-            })
+            }).value.substring(0, p.createdAt.length +1)
           }}
         </div>
-        <div class="text-sm text-dark">{{ p.title || "Hello" }}</div>
+        <div class="text-sm text-dark">
+          {{ p?.title || "Hello" }}
+        </div>
       </div>
     </div>
   </div>

@@ -19,7 +19,7 @@
         :lnglat="props.geolocation"
       >
       </MapboxDefaultMarker>
-      <MapboxGeocoder v-model="result" />
+      <!-- <MapboxGeocoder v-model="result" /> -->
 
       <MapboxDefaultPopup
         popup-id="<POPUP_ID>"

@@ -84,10 +84,10 @@ function convertProgress() {
 
     <div
       v-if="showParcel"
-      class="md:mb-36 mb-20 mt-16 sm:mx-auto mx-auto w-11/12 shadow-lg p-3 rounded-lg"
+      class="md:mb-36 mb-20 mt-3 sm:mx-auto mx-auto w-11/12 shadow-lg p-3 rounded-lg"
     >
       <CustomMap :geolocation="parcelLocation" />
-      <div class="lg:flex gap-5 items-center mt-6">
+      <div class="lg:flex gap-5 items-center mt-12">
         <div class="lg:w-6/12 w-full p-4 pt-0 order-2">
           <p class="text-lg font-bold mb-3">Parcel Details</p>
 
