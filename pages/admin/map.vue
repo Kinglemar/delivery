@@ -1,27 +1,27 @@
 <template>
-  <main class="mt-22">
+  <main class="mt-48">
     <MapboxMap
       map-id="Logist"
       class="h-[70vh]"
       :options="{
         style: 'mapbox://styles/mapbox/light-v11',
-        center: [-73.5804, 45.53483],
+        center: [ -118.2436, 34.0522,],
         pitch: 60,
         bearing: -60,
-        zoom: 15,
+        zoom: 20,
       }"
     >
       <MapboxDefaultMarker
         marker-id="<MARKER_ID>"
         :options="{}"
-        :lnglat="[-73.5804, 45.53483]"
+        :lnglat="[-118.2436,34.0522,]"
       >
       </MapboxDefaultMarker>
       <MapboxGeocoder v-model="result" />
 
       <MapboxDefaultPopup
         popup-id="<POPUP_ID>"
-        :lnglat="[-73.5804, 45.53483]"
+        :lnglat="[ -118.2436, 34.0522,]"
         :options="{
           closeOnClick: false,
         }"

@@ -20,7 +20,6 @@ async function fetchDelivery() {
       axios.get(`/shipments/tracking/${detail}`).then((res) => {
         QUOTE.value = res.data;
         const parcel = Object.assign(res.data.cargo_details.location, {});
-        console.log(parcel)
         parcelLocation.value = parcel.coordinates
         showParcel.value = true;
         audioTracking.value = false;
@@ -84,7 +83,7 @@ function convertProgress() {
 
     <div
       v-if="showParcel"
-      class="md:mb-36 mb-20 mt-3 sm:mx-auto mx-auto w-11/12 shadow-lg p-3 rounded-lg"
+      class="md:mb-36 mb-20 mt-3 sm:mx-auto mx-auto w-11/12 border shadow-lg p-3 rounded-lg"
     >
       <CustomMap :geolocation="parcelLocation" />
       <div class="lg:flex gap-5 items-center mt-12">
@@ -94,13 +93,13 @@ function convertProgress() {
           <div class="pb-8 ">
             <p class="text-sm mb-4">Delivery Progress</p>
             <ProgressBar
-              :value="QUOTE?.cargo_details?.delivery_percentange"
+              :value="QUOTE?.cargo_details?.delivery_percentange ? parseInt(QUOTE.cargo_details.delivery_percentange) : ''"
             ></ProgressBar>
           </div>
 
-          <div class="grid grid-cols-3 md:gap-10 mt-4 gap-y-8 gap-x-2 grid-rows-2">
+          <div class="grid text-sm grid-cols-3 md:gap-10 mt-4 gap-y-8 gap-x-2 grid-rows-2">
             <div
-              class="text-center relative border border-[#ddddec] p-3 rounded-lg"
+              class="text-center text-sm relative border border-[#ddddec] p-3 rounded-lg"
             >
               <p class="text-center">
                 {{ QUOTE ? QUOTE?.cargo_details.order_type : "Parcel" }}
@@ -148,7 +147,7 @@ function convertProgress() {
             </div>
           </div>
 
-          <div class="my-3">
+          <div class="my-3 text-sm">
             <div
               class="relative border min-h-[3rem] border-[#ddddec] p-3 rounded-lg my-3"
             >
@@ -185,7 +184,7 @@ function convertProgress() {
         </div>
       </div>
 
-      <div class="grid lg:grid-cols-2">
+      <div class="grid lg:grid-cols-2 text-sm">
         <div class="w-11/12 mx-auto p-4 order-2">
           <p class="text-lg font-bold mb-3">Sender's Details</p>
 

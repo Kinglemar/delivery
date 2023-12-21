@@ -8,7 +8,7 @@
         center: props.geolocation,
         pitch: 60,
         bearing: -60,
-        zoom: 15,
+        zoom: 17,
       }"
     >
       <MapboxDefaultMarker
@@ -41,10 +41,10 @@
 <script setup>
 const props = defineProps(['geolocation'])
 useMapbox("Logist", (map) => {
-  console.log(map);
+  // console.log(map);
 });
 useMapboxMarker('<MARKER_ID>', marker => {
-    console.log(marker);
+    // console.log(marker);
   });
 
 const mapRef = useMapboxRef("Logist");
