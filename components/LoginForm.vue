@@ -24,6 +24,7 @@ async function loginAdmin() {
         requesting.value = false;
       });
   } catch (error) {
+    console.log(error);
     requesting.value = false;
   }
 }

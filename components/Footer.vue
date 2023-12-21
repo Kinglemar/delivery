@@ -111,7 +111,7 @@
           >
             <h2 class="footer-menu-title font-semibold">Contact</h2>
             <ul role="list" class="footer-menu-list w-list-unstyled">
-              <li class=" text-base">+1 (307) LOGIIST</li>
+              <li class=" text-base">(307) LOGIIST</li>
               <li class="text-base">support@logistfreight.com</li>
             </ul>
           </div>
