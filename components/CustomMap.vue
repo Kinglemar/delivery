@@ -40,12 +40,12 @@
 
 <script setup>
 const props = defineProps(['geolocation'])
-useMapbox("Logist", (map) => {
-  // console.log(map);
-});
-useMapboxMarker('<MARKER_ID>', marker => {
-    // console.log(marker);
-  });
+// useMapbox("Logist", (map) => {
+//   console.log(map);
+// });
+// useMapboxMarker('<MARKER_ID>', marker => {
+//     console.log(marker);
+//   });
 
 const mapRef = useMapboxRef("Logist");
 

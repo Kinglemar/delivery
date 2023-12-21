@@ -18,16 +18,27 @@ export const useUserStore = defineStore(
     });
 
     function updateUser(userBody: any) {
-      console.log('User::', userBody);
       user.value = userBody;
     }
     function setToken(tokenBody: any) {
-      console.log('Token::', tokenBody);
       token.value = tokenBody;
+    }
+    function signOut() {
+      token.value = {
+        access: {
+          token: null,
+          expires: null,
+        },
+        refresh: {
+          token: null,
+          expires: null,
+        },
+      };
+      user.value = null;
     }
     // const getToken = computed(() => token.value.access.token);
 
-    return { user, token, setToken, updateUser};
+    return { user, token, setToken, updateUser, signOut };
   },
   {
     persist: {

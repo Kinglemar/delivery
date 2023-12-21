@@ -40,14 +40,14 @@
         </Nuxt-link>
       </div>
 
-      <pre>{{  }}</pre>
+      <pre>{{}}</pre>
 
       <div
         class="shrink-0 bg-[#DAEDFF] p-3 rounded-[10px] lg:inline-flex items-center gap-3 sm:w-11/12 mx-auto"
       >
         <div>
           <p
-            class="text-[#1F6BB1] capitalize  sm:text-[14px] text-[12px] not-italic font-bold leading-[normal] mb-1"
+            class="text-[#1F6BB1] capitalize sm:text-[14px] text-[12px] not-italic font-bold leading-[normal] mb-1"
           >
             {{ user?.username }}
           </p>
@@ -86,6 +86,7 @@ const router = useRouter();
 
 const store = useUserStore();
 const { token, user } = storeToRefs(store);
+const { signOut } = store;
 const requesting = ref(false);
 
 async function logoutAdmin() {
@@ -96,7 +97,8 @@ async function logoutAdmin() {
       .then(async (res) => {
         requesting.value = false;
         toastHandler("success", "Logged out successfully");
-        await router.push("/admin");
+        router.push("/admin");
+        signOut();
       })
       .catch((err) => {
         requesting.value = false;
